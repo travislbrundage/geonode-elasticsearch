@@ -10,6 +10,7 @@ setup(
     long_description = open("README.md").read(),
     license = "GPLv2",
     url = "https://github.com/boundlessgeo/geonode-elasticsearch",
+    download_url= "https://github.com/boundlessgeo/geonode-elasticsearch/archive/0.1.tar.gz",
     packages = find_packages(),
     classifiers = [
         "Environment :: Web Environment",
