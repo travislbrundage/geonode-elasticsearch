@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "geonode-elasticsearch-app",
-    version = "0.1",
+    version = "0.1.1",
     author = "tbrundage",
     author_email = "tbrundage@boundlessgeo.com",
     description = "Elasticsearch app for indexing GeoNode models via elasticsearch-dsl",
