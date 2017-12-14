@@ -1,2 +1,4 @@
 *.pyc
 .idea
+geonode_elasticsearch_app.egg-info
+dist

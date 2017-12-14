@@ -7,7 +7,7 @@ setup(
     author = "tbrundage",
     author_email = "tbrundage@boundlessgeo.com",
     description = "Elasticsearch app for indexing GeoNode models via elasticsearch-dsl",
-    long_description = open("README.md").read(),
+    long_description = "Elasticsearch app for indexing GeoNode models via elasticsearch-dsl",
     license = "GPLv2",
     url = "https://github.com/boundlessgeo/geonode-elasticsearch",
     download_url= "https://github.com/boundlessgeo/geonode-elasticsearch/archive/0.1.tar.gz",
