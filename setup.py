@@ -19,5 +19,9 @@ setup(
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Framework :: Django",
+    ],
+    install_requires=[
+        "elasticsearch>=2.0.0,<3.0.0",
+        "elasticsearch-dsl>=2.0.0,<3.0.0"
     ]
 )
