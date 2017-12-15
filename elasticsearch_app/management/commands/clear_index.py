@@ -19,7 +19,8 @@ class Command(BaseCommand):
         es = Elasticsearch(settings.ES_URL)
 
         # Delete all the indices this application creates
-        elasticsearchapp_indicies = [
+        # Any index added in search/signals should be added here
+        indices = [
             'layer-index',
             'map-index',
             'document-index',
@@ -27,7 +28,7 @@ class Command(BaseCommand):
             'profile-index',
             'story-index'
         ]
-        for index in elasticsearchapp_indicies:
+        for index in indices:
             try:
                 es.indices.delete(index=index)
             except TransportError:

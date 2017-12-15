@@ -1,5 +1,9 @@
 from setuptools import setup, find_packages
 
+try:
+    LONG_DESCRIPTION = open('README.md', 'r').read()
+except IOError:
+    LONG_DESCRIPTION = "Elasticsearch app for indexing GeoNode models via elasticsearch-dsl"
 
 setup(
     name = "geonode-elasticsearch-app",
@@ -7,7 +11,7 @@ setup(
     author = "tbrundage",
     author_email = "tbrundage@boundlessgeo.com",
     description = "Elasticsearch app for indexing GeoNode models via elasticsearch-dsl",
-    long_description = "Elasticsearch app for indexing GeoNode models via elasticsearch-dsl",
+    long_description = LONG_DESCRIPTION,
     license = "GPLv2",
     url = "https://github.com/boundlessgeo/geonode-elasticsearch",
     download_url= "https://github.com/boundlessgeo/geonode-elasticsearch/archive/0.1.1.tar.gz",
