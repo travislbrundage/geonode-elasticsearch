@@ -1,2 +1,1 @@
-elasticsearch>=2.0.0,<3.0.0
-elasticsearch-dsl>=2.0.0,<3.0.0
+git+https://github.com/elastic/elasticsearch-dsl-py.git@master
