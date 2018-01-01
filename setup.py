@@ -24,9 +24,6 @@ setup(
         "Framework :: Django",
     ],
     install_requires=[
-       # "elasticsearch-dsl>=6.0.0,<7.0.0"
-    ],
-    dependency_links=[
-        "git+https://github.com/elastic/elasticsearch-dsl-py.git@master"
+        "elasticsearch-dsl>=6.0.0,<7.0.0"
     ]
 )
