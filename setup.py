@@ -25,6 +25,7 @@ setup(
         "Framework :: Django",
     ],
     install_requires=[
+        "Django>=1.6.0",
         "elasticsearch>=2.0.0,<3.0.0",
         "elasticsearch-dsl>=2.0.0,<3.0.0"
     ]

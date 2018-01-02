@@ -52,7 +52,13 @@ class Command(BaseCommand):
 
         body = {
             'analysis': {
-                'analyzer': 'snowball'
+                'analyzer': {
+                    'geonode_analyzer': {
+                        'type': 'snowball',
+                        # list of terms not to stem in search results
+                        'stem_exclusion': ['category']
+                    }
+                }
             }
         }
         es.indices.put_settings(body, index='', ignore=400)
