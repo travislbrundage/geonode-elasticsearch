@@ -1,5 +1,13 @@
-from elasticsearch_dsl.connections import connections
-from elasticsearch_dsl import DocType, Integer, Keyword, Boolean, Date, Float, Text
+from elasticsearch_dsl import (
+    DocType,
+    Integer,
+    Keyword,
+    Boolean,
+    Date,
+    Float,
+    Text,
+    connections
+)
 from django.conf import settings
 
 connections.create_connection(hosts=[settings.ES_URL])
