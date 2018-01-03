@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from elasticsearch_app.utils import index_object
 
@@ -34,30 +34,63 @@ if geonode_imported:
     def layer_index_post(sender, instance, **kwargs):
         index_object(instance, LayerIndex)
 
+    @receiver(post_delete, sender=Layer)
+    def layer_index_delete(sender, instance, **kwargs):
+        index_to_remove = LayerIndex.get(instance.id)
+        if index_to_remove:
+            index_to_remove.delete()
+
 
     @receiver(post_save, sender=Map)
     def map_index_post(sender, instance, **kwargs):
         index_object(instance, MapIndex)
 
+    @receiver(post_delete, sender=Map)
+    def map_index_delete(sender, instance, **kwargs):
+        index_to_remove = MapIndex.get(instance.id)
+        if index_to_remove:
+            index_to_remove.delete()
 
     @receiver(post_save, sender=Document)
     def document_index_post(sender, instance, **kwargs):
         index_object(instance, DocumentIndex)
 
+    @receiver(post_delete, sender=Document)
+    def document_index_delete(sender, instance, **kwargs):
+        index_to_remove = DocumentIndex.get(instance.id)
+        if index_to_remove:
+            index_to_remove.delete()
 
     @receiver(post_save, sender=Profile)
     def profile_index_post(sender, instance, **kwargs):
         index_object(instance, ProfileIndex)
 
+    @receiver(post_delete, sender=Profile)
+    def profile_index_delete(sender, instance, **kwargs):
+        index_to_remove = ProfileIndex.get(instance.id)
+        if index_to_remove:
+            index_to_remove.delete()
 
     @receiver(post_save, sender=GroupProfile)
     def group_index_post(sender, instance, **kwargs):
         index_object(instance, GroupIndex)
 
+    @receiver(post_delete, sender=GroupProfile)
+    def group_index_delete(sender, instance, **kwargs):
+        index_to_remove = GroupIndex.get(instance.id)
+        if index_to_remove:
+            index_to_remove.delete()
+
 if exchange_imported:
     @receiver(post_save, sender=Story)
     def story_index_post(sender, instance, **kwargs):
         index_object(instance, StoryIndex)
+
+    @receiver(post_delete, sender=Story)
+    def story_index_delete(sender, instance, **kwargs):
+        index_to_remove = StoryIndex.get(instance.id)
+        if index_to_remove:
+            index_to_remove.delete()
 
 
 # To extend this app in your project, add a post_save
