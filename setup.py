@@ -7,14 +7,14 @@ except IOError:
 
 setup(
     name = "geonode-elasticsearch-app",
-    version = "0.1.2",
+    version = "0.1.3",
     author = "tbrundage",
     author_email = "tbrundage@boundlessgeo.com",
     description = "Elasticsearch app for indexing GeoNode models via elasticsearch-dsl",
     long_description = LONG_DESCRIPTION,
     license = "GPLv2",
     url = "https://github.com/boundlessgeo/geonode-elasticsearch",
-    download_url= "https://github.com/boundlessgeo/geonode-elasticsearch/archive/0.1.2.tar.gz",
+    download_url= "https://github.com/boundlessgeo/geonode-elasticsearch/archive/0.1.3.tar.gz",
     packages = find_packages(),
     classifiers = [
         "Environment :: Web Environment",
