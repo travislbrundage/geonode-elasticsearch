@@ -59,7 +59,7 @@ class LayerIndex(DocType):
 class MapIndex(DocType):
     id = Integer()
     abstract = Text()
-    category__gn_description = Keyword()
+    category__gn_description = Text()
     csw_type = Keyword()
     csw_wkt_geometry = Keyword()
     detail_url = Keyword()
@@ -94,7 +94,7 @@ class MapIndex(DocType):
 class DocumentIndex(DocType):
     id = Integer()
     abstract = Text()
-    category__gn_description = Keyword()
+    category__gn_description = Text()
     csw_type = Keyword()
     csw_wkt_geometry = Keyword()
     detail_url = Keyword()
@@ -128,9 +128,9 @@ class DocumentIndex(DocType):
 
 class ProfileIndex(DocType):
     id = Integer()
-    username = Keyword()
-    first_name = Keyword()
-    last_name = Keyword()
+    username = Text()
+    first_name = Text()
+    last_name = Text()
     profile = Keyword()
     organization = Text()
     position = Keyword()
@@ -155,8 +155,8 @@ class GroupIndex(DocType):
 class StoryIndex(DocType):
     id = Integer()
     abstract = Text()
-    category__gn_description = Keyword()
-    distribution_description = Keyword()
+    category__gn_description = Text()
+    distribution_description = Text()
     distribution_url = Keyword()
     owner__username = Keyword()
     popular_count = Integer()
@@ -181,8 +181,8 @@ class StoryIndex(DocType):
     num_ratings = Integer()
     num_comments = Integer()
     num_chapters = Integer()
-    owner__first_name = Keyword()
-    owner__last_name = Keyword()
+    owner__first_name = Text()
+    owner__last_name = Text()
     is_published = Boolean()
     featured = Boolean()
 
