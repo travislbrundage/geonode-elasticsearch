@@ -6,21 +6,38 @@ from elasticsearch_dsl import (
     Date,
     Float,
     Text,
-    connections
+    connections,
+    field,
+    analyzer
 )
 from django.conf import settings
 
 connections.create_connection(hosts=[settings.ES_URL])
 
+pattern_analyzer = analyzer(
+  'pattern_analyzer',
+  type='pattern',
+  pattern="\\W|_",
+  lowercase=True
+)
 
 class LayerIndex(DocType):
     id = Integer()
-    abstract = Text()
+    abstract = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
     category__gn_description = Text()
     csw_type = Keyword()
     csw_wkt_geometry = Keyword()
     detail_url = Keyword()
-    owner__username = Keyword()
+    owner__username = Keyword(
+        fields={
+            'text': field.Text()
+        }
+    )
     owner__first_name = Text()
     owner__last_name = Text()
     is_published = Boolean()
@@ -32,21 +49,50 @@ class LayerIndex(DocType):
     supplemental_information = Text()
     thumbnail_url = Keyword()
     uuid = Keyword()
-    title = Text(analyzer='simple')
+    title = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
     date = Date()
-    type = Keyword()
-    subtype = Keyword()
+    type = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    subtype = Keyword(
+        fields={
+            'text': field.Text()
+        }
+    )
     typename = Keyword()
-    title_sortable = Text(analyzer='simple')
-    category = Keyword()
+    title_sortable = Text()
+    category = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     bbox_left = Float()
     bbox_right = Float()
     bbox_bottom = Float()
     bbox_top = Float()
     temporal_extent_start = Date()
     temporal_extent_end = Date()
-    keywords = Keyword(multi=True)
-    regions = Text(multi=True)
+    keywords = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    regions = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     num_ratings = Integer()
     num_comments = Integer()
     geogig_link = Keyword()
@@ -58,12 +104,21 @@ class LayerIndex(DocType):
 
 class MapIndex(DocType):
     id = Integer()
-    abstract = Text()
+    abstract = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
     category__gn_description = Text()
     csw_type = Keyword()
     csw_wkt_geometry = Keyword()
     detail_url = Keyword()
-    owner__username = Keyword()
+    owner__username = Keyword(
+        fields={
+            'text': field.Text()
+        }
+    )
     popular_count = Integer()
     share_count = Integer()
     rating = Integer()
@@ -71,19 +126,44 @@ class MapIndex(DocType):
     supplemental_information = Text()
     thumbnail_url = Keyword()
     uuid = Keyword()
-    title = Text(analyzer='simple')
+    title = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
     date = Date()
-    type = Keyword()
-    title_sortable = Text(analyzer='simple')
-    category = Keyword()
+    type = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    title_sortable = Text()
+    category = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     bbox_left = Float()
     bbox_right = Float()
     bbox_bottom = Float()
     bbox_top = Float()
     temporal_extent_start = Date()
     temporal_extent_end = Date()
-    keywords = Keyword(multi=True)
-    regions = Text(multi=True)
+    keywords = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    regions = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     num_ratings = Integer()
     num_comments = Integer()
 
@@ -93,12 +173,21 @@ class MapIndex(DocType):
 
 class DocumentIndex(DocType):
     id = Integer()
-    abstract = Text()
+    abstract = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
     category__gn_description = Text()
     csw_type = Keyword()
     csw_wkt_geometry = Keyword()
     detail_url = Keyword()
-    owner__username = Keyword()
+    owner__username = Keyword(
+        fields={
+            'text': field.Text()
+        }
+    )
     popular_count = Integer()
     share_count = Integer()
     rating = Integer()
@@ -106,19 +195,44 @@ class DocumentIndex(DocType):
     supplemental_information = Text()
     thumbnail_url = Keyword()
     uuid = Keyword()
-    title = Text(analyzer='simple')
+    title = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
     date = Date()
-    type = Keyword()
-    title_sortable = Text(analyzer='simple')
-    category = Keyword()
+    type = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    title_sortable = Text()
+    category = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     bbox_left = Float()
     bbox_right = Float()
     bbox_bottom = Float()
     bbox_top = Float()
     temporal_extent_start = Date()
     temporal_extent_end = Date()
-    keywords = Keyword(multi=True)
-    regions = Text(multi=True)
+    keywords = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    regions = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     num_ratings = Integer()
     num_comments = Integer()
 
@@ -134,7 +248,12 @@ class ProfileIndex(DocType):
     profile = Keyword()
     organization = Text()
     position = Keyword()
-    type = Keyword()
+    type = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
 
     class Meta:
         index = 'profile-index'
@@ -142,11 +261,21 @@ class ProfileIndex(DocType):
 
 class GroupIndex(DocType):
     id = Integer()
-    title = Text(analyzer='simple')
-    title_sortable = Text(analyzer='simple')
+    title = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    title_sortable = Text()
     description = Text()
     json = Text()
-    type = Keyword()
+    type = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
 
     class Meta:
         index = 'group-index'
@@ -154,30 +283,64 @@ class GroupIndex(DocType):
 
 class StoryIndex(DocType):
     id = Integer()
-    abstract = Text()
+    abstract = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
     category__gn_description = Text()
     distribution_description = Text()
     distribution_url = Keyword()
-    owner__username = Keyword()
+    owner__username = Keyword(
+        fields={
+            'text': field.Text()
+        }
+    )
     popular_count = Integer()
     share_count = Integer()
     rating = Integer()
     thumbnail_url = Keyword()
     detail_url = Keyword()
     uuid = Keyword()
-    title = Text(analyzer='simple')
+    title = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
     date = Date()
-    type = Keyword()
-    title_sortable = Text(analyzer='simple')
-    category = Keyword()
+    type = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    title_sortable = Text()
+    category = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     bbox_left = Float()
     bbox_right = Float()
     bbox_bottom = Float()
     bbox_top = Float()
     temporal_extent_start = Date()
     temporal_extent_end = Date()
-    keywords = Keyword(multi=True)
-    regions = Text(multi=True)
+    keywords = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    regions = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     num_ratings = Integer()
     num_comments = Integer()
     num_chapters = Integer()
