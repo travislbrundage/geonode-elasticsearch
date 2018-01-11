@@ -3,6 +3,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from django.core.management.base import BaseCommand
+from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
@@ -40,7 +41,8 @@ class Command(BaseCommand):
 
     def handle(self, **options):
         '''
-        Repopulates the indices in elastic.
+        Removes any extraneous data not matched in Django data.
+        Repopulates the indices in elastic with current Django data.
         '''
         es = Elasticsearch(settings.ES_URL)
 
@@ -61,6 +63,36 @@ class Command(BaseCommand):
             }
         }
         es.indices.put_settings(body, index='', ignore=400)
+
+        def remove_extraneous_elements(index, model, doctype):
+            '''
+            Removes any items that exist in a GeoNode index which
+            no longer exist in Django
+            :param index: The string name of the index in elasticsearch
+            :param model: The Django/GeoNode model
+            :param doctype: The doctype corresponding to the index
+            :return:
+            '''
+            indexed_items = es.search(index=index)
+
+            for item in indexed_items['hits']['hits']:
+                model_id = item['_id']
+                try:
+                    model.objects.get(id=model_id)
+                except ObjectDoesNotExist:
+                    doctype.get(id=model_id).delete()
+
+        # Any indices containing extraneous data should be removed here
+        if geonode_imported:
+            remove_extraneous_elements('layer-index', Layer, LayerIndex)
+            remove_extraneous_elements('map-index', Map, MapIndex)
+            remove_extraneous_elements('document-index', Document, DocumentIndex)
+            remove_extraneous_elements('profile-index', Profile, ProfileIndex)
+            remove_extraneous_elements('group-index', GroupProfile, GroupIndex)
+
+        if exchange_imported:
+            remove_extraneous_elements('story-index', Story, StoryIndex)
+
 
         # Any indices added in search.py should be indexed here
         if geonode_imported:
