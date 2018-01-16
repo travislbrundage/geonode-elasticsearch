@@ -1,47 +1,101 @@
-from elasticsearch_dsl.connections import connections
-from elasticsearch_dsl import DocType, Integer, String, Boolean, Date, Float
+from elasticsearch_dsl import (
+    DocType,
+    Integer,
+    Keyword,
+    Boolean,
+    Date,
+    Float,
+    Text,
+    connections,
+    field,
+    analyzer
+)
 from django.conf import settings
 
 connections.create_connection(hosts=[settings.ES_URL])
 
+pattern_analyzer = analyzer(
+  'pattern_analyzer',
+  type='pattern',
+  pattern="\\W|_",
+  lowercase=True
+)
 
 class LayerIndex(DocType):
     id = Integer()
-    abstract = String()
-    category__gn_description = String(analyzer='snowball')
-    csw_type = String(analyzer='snowball')
-    csw_wkt_geometry = String(analyzer='snowball')
-    detail_url = String(analyzer='snowball')
-    owner__username = String()
-    owner__first_name = String(analyzer='snowball')
-    owner__last_name = String(analyzer='snowball')
+    abstract = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    category__gn_description = Text()
+    csw_type = Keyword()
+    csw_wkt_geometry = Keyword()
+    detail_url = Keyword()
+    owner__username = Keyword(
+        fields={
+            'text': field.Text()
+        }
+    )
+    owner__first_name = Text()
+    owner__last_name = Text()
     is_published = Boolean()
     featured = Boolean()
     popular_count = Integer()
     share_count = Integer()
     rating = Integer()
-    srid = String(analyzer='snowball')
-    supplemental_information = String(analyzer='snowball')
-    thumbnail_url = String(analyzer='snowball')
-    uuid = String(analyzer='snowball')
-    title = String()
+    srid = Keyword()
+    supplemental_information = Text()
+    thumbnail_url = Keyword()
+    uuid = Keyword()
+    title = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
     date = Date()
-    type = String()
-    subtype = String()
-    typename = String(analyzer='snowball')
-    title_sortable = String()
-    category = String()
+    type = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    subtype = Keyword(
+        fields={
+            'text': field.Text()
+        }
+    )
+    typename = Keyword()
+    title_sortable = Text()
+    category = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     bbox_left = Float()
     bbox_right = Float()
     bbox_bottom = Float()
     bbox_top = Float()
     temporal_extent_start = Date()
     temporal_extent_end = Date()
-    keywords = String(multi=True)
-    regions = String(multi=True)
+    keywords = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    regions = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     num_ratings = Integer()
     num_comments = Integer()
-    geogig_link = String(analyzer='snowball')
+    geogig_link = Keyword()
     has_time = Boolean()
 
     class Meta:
@@ -50,32 +104,66 @@ class LayerIndex(DocType):
 
 class MapIndex(DocType):
     id = Integer()
-    abstract = String()
-    category__gn_description = String(analyzer='snowball')
-    csw_type = String(analyzer='snowball')
-    csw_wkt_geometry = String(analyzer='snowball')
-    detail_url = String(analyzer='snowball')
-    owner__username = String()
+    abstract = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    category__gn_description = Text()
+    csw_type = Keyword()
+    csw_wkt_geometry = Keyword()
+    detail_url = Keyword()
+    owner__username = Keyword(
+        fields={
+            'text': field.Text()
+        }
+    )
     popular_count = Integer()
     share_count = Integer()
     rating = Integer()
-    srid = String(analyzer='snowball')
-    supplemental_information = String(analyzer='snowball')
-    thumbnail_url = String(analyzer='snowball')
-    uuid = String(analyzer='snowball')
-    title = String()
+    srid = Keyword()
+    supplemental_information = Text()
+    thumbnail_url = Keyword()
+    uuid = Keyword()
+    title = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
     date = Date()
-    type = String()
-    title_sortable = String()
-    category = String()
+    type = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    title_sortable = Text()
+    category = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     bbox_left = Float()
     bbox_right = Float()
     bbox_bottom = Float()
     bbox_top = Float()
     temporal_extent_start = Date()
     temporal_extent_end = Date()
-    keywords = String(multi=True)
-    regions = String(multi=True)
+    keywords = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    regions = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     num_ratings = Integer()
     num_comments = Integer()
 
@@ -85,32 +173,66 @@ class MapIndex(DocType):
 
 class DocumentIndex(DocType):
     id = Integer()
-    abstract = String()
-    category__gn_description = String(analyzer='snowball')
-    csw_type = String(analyzer='snowball')
-    csw_wkt_geometry = String(analyzer='snowball')
-    detail_url = String(analyzer='snowball')
-    owner__username = String()
+    abstract = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    category__gn_description = Text()
+    csw_type = Keyword()
+    csw_wkt_geometry = Keyword()
+    detail_url = Keyword()
+    owner__username = Keyword(
+        fields={
+            'text': field.Text()
+        }
+    )
     popular_count = Integer()
     share_count = Integer()
     rating = Integer()
-    srid = String(analyzer='snowball')
-    supplemental_information = String(analyzer='snowball')
-    thumbnail_url = String(analyzer='snowball')
-    uuid = String(analyzer='snowball')
-    title = String()
+    srid = Keyword()
+    supplemental_information = Text()
+    thumbnail_url = Keyword()
+    uuid = Keyword()
+    title = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
     date = Date()
-    type = String()
-    title_sortable = String()
-    category = String()
+    type = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    title_sortable = Text()
+    category = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     bbox_left = Float()
     bbox_right = Float()
     bbox_bottom = Float()
     bbox_top = Float()
     temporal_extent_start = Date()
     temporal_extent_end = Date()
-    keywords = String(multi=True)
-    regions = String(multi=True)
+    keywords = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    regions = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     num_ratings = Integer()
     num_comments = Integer()
 
@@ -120,13 +242,18 @@ class DocumentIndex(DocType):
 
 class ProfileIndex(DocType):
     id = Integer()
-    username = String(analyzer='snowball')
-    first_name = String(analyzer='snowball')
-    last_name = String(analyzer='snowball')
-    profile = String(analyzer='snowball')
-    organization = String(analyzer='snowball')
-    position = String(analyzer='snowball')
-    type = String()
+    username = Text()
+    first_name = Text()
+    last_name = Text()
+    profile = Keyword()
+    organization = Text()
+    position = Keyword()
+    type = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
 
     class Meta:
         index = 'profile-index'
@@ -134,11 +261,21 @@ class ProfileIndex(DocType):
 
 class GroupIndex(DocType):
     id = Integer()
-    title = String()
-    title_sortable = String()
-    description = String(analyzer='snowball')
-    json = String()
-    type = String()
+    title = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    title_sortable = Text()
+    description = Text()
+    json = Text()
+    type = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
 
     class Meta:
         index = 'group-index'
@@ -146,35 +283,69 @@ class GroupIndex(DocType):
 
 class StoryIndex(DocType):
     id = Integer()
-    abstract = String()
-    category__gn_description = String(analyzer='snowball')
-    distribution_description = String(analyzer='snowball')
-    distribution_url = String(analyzer='snowball')
-    owner__username = String()
+    abstract = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    category__gn_description = Text()
+    distribution_description = Text()
+    distribution_url = Keyword()
+    owner__username = Keyword(
+        fields={
+            'text': field.Text()
+        }
+    )
     popular_count = Integer()
     share_count = Integer()
     rating = Integer()
-    thumbnail_url = String(analyzer='snowball')
-    detail_url = String(analyzer='snowball')
-    uuid = String(analyzer='snowball')
-    title = String(analyzer='snowball')
+    thumbnail_url = Keyword()
+    detail_url = Keyword()
+    uuid = Keyword()
+    title = Text(
+        fields={
+            'pattern': field.Text(analyzer=pattern_analyzer),
+            'english': field.Text(analyzer='english')
+        }
+    )
     date = Date()
-    type = String()
-    title_sortable = String()
-    category = String()
+    type = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    title_sortable = Text()
+    category = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     bbox_left = Float()
     bbox_right = Float()
     bbox_bottom = Float()
     bbox_top = Float()
     temporal_extent_start = Date()
     temporal_extent_end = Date()
-    keywords = String(multi=True)
-    regions = String(multi=True)
+    keywords = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
+    regions = Keyword(
+        fields={
+            'text': field.Text(),
+            'english': field.Text(analyzer='english')
+        }
+    )
     num_ratings = Integer()
     num_comments = Integer()
     num_chapters = Integer()
-    owner__first_name = String(analyzer='snowball')
-    owner__last_name = String(analyzer='snowball')
+    owner__first_name = Text()
+    owner__last_name = Text()
     is_published = Boolean()
     featured = Boolean()
 

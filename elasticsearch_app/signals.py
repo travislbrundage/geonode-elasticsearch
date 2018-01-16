@@ -9,8 +9,13 @@ try:
     from geonode.documents.models import Document
     from geonode.people.models import Profile
     from geonode.groups.models import GroupProfile
-    from elasticsearch_app.search import LayerIndex, \
-        MapIndex, DocumentIndex, ProfileIndex, GroupIndex
+    from elasticsearch_app.search import (
+        LayerIndex,
+        MapIndex,
+        DocumentIndex,
+        ProfileIndex,
+        GroupIndex
+    )
     geonode_imported = True
 except ImportError:
     geonode_imported = False
