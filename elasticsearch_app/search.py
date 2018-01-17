@@ -47,6 +47,11 @@ class LayerIndex(DocType):
     rating = Integer()
     srid = Keyword()
     supplemental_information = Text()
+    source_host = Keyword(
+        fields={
+            'text': field.Text()
+        }
+    )
     thumbnail_url = Keyword()
     uuid = Keyword()
     title = Text(
