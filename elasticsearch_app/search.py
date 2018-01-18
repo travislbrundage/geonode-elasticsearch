@@ -6,6 +6,7 @@ from elasticsearch_dsl import (
     Date,
     Float,
     Text,
+    Field,
     connections,
     field,
     analyzer
@@ -96,6 +97,22 @@ class LayerIndex(DocType):
         fields={
             'text': field.Text(),
             'english': field.Text(analyzer='english')
+        }
+    )
+    references = Field(
+        properties={
+            'url': Text(),
+            'name': Keyword(
+                fields={
+                    'text': field.Text()
+                }
+            ),
+            'scheme': Keyword(
+                fields={
+                    'text': field.Text(),
+                    'pattern': field.Text(analyzer=pattern_analyzer)
+                }
+            )
         }
     )
     num_ratings = Integer()

@@ -7,7 +7,7 @@ except IOError:
 
 setup(
     name = "geonode-elasticsearch-app",
-    version = "0.2.0",
+    version = "0.2.1",
     author = "tbrundage",
     author_email = "tbrundage@boundlessgeo.com",
     description = "Elasticsearch app for indexing GeoNode models via elasticsearch-dsl",
