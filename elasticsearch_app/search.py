@@ -6,6 +6,7 @@ from elasticsearch_dsl import (
     Date,
     Float,
     Text,
+    Field,
     connections,
     field,
     analyzer
@@ -47,6 +48,11 @@ class LayerIndex(DocType):
     rating = Integer()
     srid = Keyword()
     supplemental_information = Text()
+    source_host = Keyword(
+        fields={
+            'text': field.Text()
+        }
+    )
     thumbnail_url = Keyword()
     uuid = Keyword()
     title = Text(
@@ -68,7 +74,7 @@ class LayerIndex(DocType):
         }
     )
     typename = Keyword()
-    title_sortable = Text()
+    title_sortable = Keyword()
     category = Keyword(
         fields={
             'text': field.Text(),
@@ -91,6 +97,22 @@ class LayerIndex(DocType):
         fields={
             'text': field.Text(),
             'english': field.Text(analyzer='english')
+        }
+    )
+    references = Field(
+        properties={
+            'url': Text(),
+            'name': Keyword(
+                fields={
+                    'text': field.Text()
+                }
+            ),
+            'scheme': Keyword(
+                fields={
+                    'text': field.Text(),
+                    'pattern': field.Text(analyzer=pattern_analyzer)
+                }
+            )
         }
     )
     num_ratings = Integer()
@@ -139,7 +161,7 @@ class MapIndex(DocType):
             'english': field.Text(analyzer='english')
         }
     )
-    title_sortable = Text()
+    title_sortable = Keyword()
     category = Keyword(
         fields={
             'text': field.Text(),
@@ -208,7 +230,7 @@ class DocumentIndex(DocType):
             'english': field.Text(analyzer='english')
         }
     )
-    title_sortable = Text()
+    title_sortable = Keyword()
     category = Keyword(
         fields={
             'text': field.Text(),
@@ -267,7 +289,7 @@ class GroupIndex(DocType):
             'english': field.Text(analyzer='english')
         }
     )
-    title_sortable = Text()
+    title_sortable = Keyword()
     description = Text()
     json = Text()
     type = Keyword(
@@ -316,7 +338,7 @@ class StoryIndex(DocType):
             'english': field.Text(analyzer='english')
         }
     )
-    title_sortable = Text()
+    title_sortable = Keyword()
     category = Keyword(
         fields={
             'text': field.Text(),
