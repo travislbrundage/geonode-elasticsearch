@@ -74,7 +74,7 @@ class LayerIndex(DocType):
         }
     )
     typename = Keyword()
-    title_sortable = Text()
+    title_sortable = Keyword()
     category = Keyword(
         fields={
             'text': field.Text(),
@@ -161,7 +161,7 @@ class MapIndex(DocType):
             'english': field.Text(analyzer='english')
         }
     )
-    title_sortable = Text()
+    title_sortable = Keyword()
     category = Keyword(
         fields={
             'text': field.Text(),
@@ -230,7 +230,7 @@ class DocumentIndex(DocType):
             'english': field.Text(analyzer='english')
         }
     )
-    title_sortable = Text()
+    title_sortable = Keyword()
     category = Keyword(
         fields={
             'text': field.Text(),
@@ -289,7 +289,7 @@ class GroupIndex(DocType):
             'english': field.Text(analyzer='english')
         }
     )
-    title_sortable = Text()
+    title_sortable = Keyword()
     description = Text()
     json = Text()
     type = Keyword(
@@ -338,7 +338,7 @@ class StoryIndex(DocType):
             'english': field.Text(analyzer='english')
         }
     )
-    title_sortable = Text()
+    title_sortable = Keyword()
     category = Keyword(
         fields={
             'text': field.Text(),
