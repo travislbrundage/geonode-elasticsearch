@@ -140,15 +140,7 @@ def prepare_source_host(resource):
 
 
 def prepare_title(resource):
-    try:
-        resource_service = resource.service
-    except ObjectDoesNotExist:
-        resource_service = None
-
-    if resource_service is not None:
-        return '{} {}'.format(resource.service.title.strip(), resource.title)
-    else:
-        return resource.title
+    return resource.title
 
 
 def prepare_references(resource):
